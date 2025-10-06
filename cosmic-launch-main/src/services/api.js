@@ -1,8 +1,11 @@
 import axios from 'axios';
 
 // Base API configuration
-// When using Vite dev proxy, call relative /api to avoid CORS entirely
-const API_BASE_URL = '/api';
+// In production on Vercel, set VITE_API_URL to your Render backend origin.
+// Example: VITE_API_URL=https://your-backend.onrender.com
+// Fallback to relative "/api" for local dev proxy.
+const API_ORIGIN = (import.meta?.env?.VITE_API_URL || '').replace(/\/$/, '');
+const API_BASE_URL = `${API_ORIGIN}/api`;
 
 // Create axios instance with default config
 const api = axios.create({
