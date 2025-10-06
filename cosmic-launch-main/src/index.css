@@ -297,6 +297,11 @@ All colors MUST be HSL for consistent theming.
     height: 100%;
   }
 
+  /* Slightly reduce base scale on large screens so 100% zoom feels tighter */
+  @media (min-width: 1280px) {
+    html { font-size: 15px; }
+  }
+
   /* Premium scrollbar styling */
   ::-webkit-scrollbar {
     width: 8px;
@@ -557,7 +562,7 @@ All colors MUST be HSL for consistent theming.
 
   /* Responsive Utilities */
   .container {
-    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   /* Mobile Navigation */
