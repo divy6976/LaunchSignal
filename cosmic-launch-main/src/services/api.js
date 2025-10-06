@@ -3,9 +3,17 @@ import axios from 'axios';
 // Base API configuration
 // In production on Vercel, set VITE_API_URL to your Render backend origin.
 // Example: VITE_API_URL=https://your-backend.onrender.com
-// Fallback to relative "/api" for local dev proxy.
-const API_ORIGIN = (import.meta?.env?.VITE_API_URL || '').replace(/\/$/, '');
-const API_BASE_URL = `${API_ORIGIN}/api`;
+// If not set, auto-fallback to Render when running on the Vercel domain.
+const inferredOrigin = (typeof window !== 'undefined' && window.location.host.includes('launch-signal.vercel.app'))
+  ? 'https://launchsignal.onrender.com'
+  : '';
+const API_ORIGIN = (import.meta?.env?.VITE_API_URL || inferredOrigin || '').replace(/\/$/, '');
+const API_BASE_URL = API_ORIGIN ? `${API_ORIGIN}/api` : '/api';
+if (typeof window !== 'undefined') {
+  // Log once to help verify the resolved API base in production builds
+  // eslint-disable-next-line no-console
+  console.log('[API] Using base URL:', API_BASE_URL);
+}
 
 // Create axios instance with default config
 const api = axios.create({
