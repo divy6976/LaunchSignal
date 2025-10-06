@@ -299,10 +299,10 @@ All colors MUST be HSL for consistent theming.
 
   /* Slightly reduce base scale on large screens so 100% zoom feels tighter */
   @media (min-width: 1280px) {
-    html { font-size: 14px; }
+    html { font-size: 13px; }
   }
   @media (min-width: 1536px) {
-    html { font-size: 13.5px; }
+    html { font-size: 12.5px; }
   }
 
   /* Premium scrollbar styling */
@@ -565,7 +565,7 @@ All colors MUST be HSL for consistent theming.
 
   /* Responsive Utilities */
   .container {
-    @apply w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   /* Mobile Navigation */
