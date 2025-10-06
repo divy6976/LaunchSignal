@@ -39,8 +39,8 @@ const signup = async (req, res) => {
         // Step 6: Token ko HTTP-Only cookie mein set karo
         const options = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: true, // cross-site cookie requires Secure
+            sameSite: 'none', // allow cross-site cookie from Vercel → Render
             maxAge: 3 * 24 * 60 * 60 * 1000 // 3 din
         };
 
@@ -93,8 +93,8 @@ const login = async (req, res) => {
         // Step 8: Token ko HTTP-Only cookie mein set karo
         const options = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: true,
+            sameSite: 'none',
             maxAge: 3 * 24 * 60 * 60 * 1000 // 3 din
         };
 
@@ -133,6 +133,8 @@ const logoutUser = (req, res) => {
     // Cookie ko clear karne ka sahi tareeka
     res.cookie('token', '', {
         httpOnly: true,
+        secure: true,
+        sameSite: 'none',
         expires: new Date(0) // Cookie ko expire kar do
     });
     res.status(200).json({ message: 'Logged out successfully' });
@@ -187,8 +189,8 @@ const googleLogin = async (req, res) => {
         );
         const options = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: true,
+            sameSite: 'none',
             maxAge: 3 * 24 * 60 * 60 * 1000,
         };
 
