@@ -12,12 +12,14 @@ const feedbackRoutes=require('../routes/feedbackRoutes.js')
 const contactRoutes = require('../routes/contactRoutes.js');
 
 const app = express()
-const port = 3000
+const port = Number(process.env.PORT) || 3000
 
-// CORS: allow cookies from Vite dev (8080) to backend (3000)
+// CORS: allow local dev and optional VERCEL_URL origin via env
 app.use((req, res, next) => {
     const origin = req.headers.origin || '';
+    const vercelUrl = process.env.FRONTEND_ORIGIN || '';
     const allowed = ['http://localhost:8080', 'http://127.0.0.1:8080'];
+    if (vercelUrl) allowed.push(vercelUrl);
     if (allowed.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
         res.setHeader('Vary', 'Origin');
@@ -91,8 +93,8 @@ connectDB().then(() => {
             console.warn('Admin ensure failed:', e?.message);
         }
     })();
-    app.listen(port, () => {
-        console.log(`Server is running on http://localhost:${port}`);
+    app.listen(port, '0.0.0.0', () => {
+        console.log(`Server is running on http://0.0.0.0:${port}`);
     });
 }).catch(err => {
     console.error("Failed to connect to the database", err);
