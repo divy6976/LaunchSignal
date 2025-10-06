@@ -1,0 +1,17 @@
+node_modules/
+.env
+.env.*
+dist/
+build/
+.next/
+.nuxt/
+.turbo/
+.vercel/
+.vite/
+.parcel-cache/
+coverage/
+.eslintcache
+.DS_Store
+*.log
+.idea/
+.vscode/
