@@ -379,11 +379,19 @@ const StartupDiscovery = () => {
                             whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
                             transition={{ duration: 0.5 }}
                           >
-                            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 group-hover:from-blue-200 group-hover:to-blue-300 transition-all duration-300 shadow-soft group-hover:shadow-glow">
-                              <span className="text-xl font-bold text-blue-700">
-                                {(startup?.name || '').substring(0, 2).toUpperCase()}
-                              </span>
-                            </div>
+                            {startup?.logo ? (
+                              <img 
+                                src={startup.logo}
+                                alt={(startup?.name || 'Startup') + ' logo'}
+                                className="h-14 w-14 rounded-2xl object-cover shadow-soft group-hover:shadow-glow border border-slate-200/60"
+                              />
+                            ) : (
+                              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 group-hover:from-blue-200 group-hover:to-blue-300 transition-all duration-300 shadow-soft group-hover:shadow-glow">
+                                <span className="text-xl font-bold text-blue-700">
+                                  {(startup?.name || '').substring(0, 2).toUpperCase()}
+                                </span>
+                              </div>
+                            )}
                           </motion.div>
                           <div className="flex-1 min-w-0">
                             <h3 className="font-bold text-slate-900 text-xl group-hover:text-blue-600 transition-colors duration-300 mb-2">
