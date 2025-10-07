@@ -62,9 +62,9 @@ export const userAPI = {
     return response.data;
   },
 
-  // Google OAuth login
-  googleLogin: async ({ credential }) => {
-    const response = await api.post('/users/google-login', { credential });
+  // Google OAuth login (accepts either { credential } or { accessToken })
+  googleLogin: async (payload) => {
+    const response = await api.post('/users/google-login', payload);
     return response.data;
   },
 

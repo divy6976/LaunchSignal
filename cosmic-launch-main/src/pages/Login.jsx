@@ -100,7 +100,11 @@ const Login = () => {
     try {
       setIsLoading(true);
       setError("");
-      const response = await userAPI.googleLogin({ credential: credentialResponse.credential });
+      // @react-oauth/google's useGoogleLogin returns either an access_token (OAuth) or a credential (One Tap)
+      const accessToken = credentialResponse?.access_token;
+      const idToken = credentialResponse?.credential;
+      const payload = accessToken ? { accessToken } : { credential: idToken };
+      const response = await userAPI.googleLogin(payload);
       if (response.message) {
         const { fullName, role, email } = response;
         localStorage.setItem('userName', fullName);

@@ -147,19 +147,36 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const googleLogin = async (req, res) => {
     try {
-        const { credential } = req.body;
-        if (!credential) {
+        const { credential, accessToken } = req.body;
+        let email = '';
+        let fullName = 'User';
+
+        if (!credential && !accessToken) {
             return res.status(400).json({ message: 'Missing Google credential' });
         }
 
-        // Verify credential with Google
-        const ticket = await googleClient.verifyIdToken({
-            idToken: credential,
-            audience: process.env.GOOGLE_CLIENT_ID,
-        });
-        const payload = ticket.getPayload();
-        const email = String(payload.email || '').toLowerCase().trim();
-        const fullName = payload.name || payload.given_name || 'User';
+        if (credential) {
+            // Verify ID token
+            const ticket = await googleClient.verifyIdToken({
+                idToken: credential,
+                audience: process.env.GOOGLE_CLIENT_ID,
+            });
+            const payload = ticket.getPayload();
+            email = String(payload.email || '').toLowerCase().trim();
+            fullName = payload.name || payload.given_name || fullName;
+        } else if (accessToken) {
+            // Fetch userinfo using access token
+            const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+            const resp = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            if (!resp.ok) {
+                return res.status(401).json({ message: 'Invalid Google access token' });
+            }
+            const info = await resp.json();
+            email = String(info.email || '').toLowerCase().trim();
+            fullName = info.name || info.given_name || fullName;
+        }
 
         if (!email) {
             return res.status(400).json({ message: 'Google account missing email' });
