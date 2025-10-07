@@ -345,7 +345,7 @@ const StartupDiscovery = () => {
               return (
                 <motion.div 
                   key={startup?.id || index} 
-                  className="relative pt-4"
+                  className="relative pt-4 h-full"
                   variants={itemVariants}
                   whileHover={{ y: -8 }}
                   transition={{ duration: 0.3 }}
@@ -360,7 +360,7 @@ const StartupDiscovery = () => {
                   </motion.div>
                   
                   <motion.div
-                    className={`group relative flex flex-col bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-soft hover:shadow-premium transition-all duration-500 overflow-hidden ${isCenter ? 'lg:scale-[1.04] lg:-translate-y-1 border-blue-300/80' : 'hover:border-blue-200/80'} ${rankNum===1?'ring-2 ring-yellow-400/50 shadow-glow': ''}`}
+                    className={`group relative flex flex-col h-full bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-soft hover:shadow-premium transition-all duration-500 overflow-hidden ${isCenter ? 'lg:scale-[1.04] lg:-translate-y-1 border-blue-300/80' : 'hover:border-blue-200/80'} ${rankNum===1?'ring-2 ring-yellow-400/50 shadow-glow': ''}`}
                     whileHover={{ scale: isCenter ? 1.08 : 1.02 }}
                     transition={{ duration: 0.3 }}
                   >
@@ -371,7 +371,7 @@ const StartupDiscovery = () => {
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-50/50 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     
-                    <div className="relative z-10 p-6 md:p-8">
+                    <div className="relative z-10 p-6 md:p-8 h-full flex flex-col">
                       <div className="flex items-start justify-between mb-6">
                         <div className="flex items-start space-x-4 flex-1">
                           <motion.div 

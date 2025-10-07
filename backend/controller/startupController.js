@@ -498,6 +498,7 @@ const getTrendingPublic = async (req, res) => {
             views: s.views || 0,
             upvotes: upvoteMap.get(String(s._id)) || 0,
             founderId: s.founderId,
+            logo: s.logo || null,
             hasSpecialOffer: Boolean(s.hasSpecialOffer),
             specialOfferText: s.specialOfferText || '',
             specialOfferCode: s.specialOfferCode || null,
