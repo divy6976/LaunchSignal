@@ -158,7 +158,7 @@ const Hero = () => {
           variants={itemVariants}
           className="flex flex-col gap-4 sm:flex-row sm:justify-center sm:gap-6 mb-16"
         >
-          <Link to="/signup">
+          <Link to="/signup?role=founder">
             <motion.div
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
@@ -185,7 +185,7 @@ const Hero = () => {
             </motion.div>
           </Link>
           
-          <Link to="/signup">
+          <Link to="/signup?role=adopter">
             <motion.div
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}

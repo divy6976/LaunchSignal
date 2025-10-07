@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,6 +20,17 @@ const Signup = () => {
     confirmPassword: "",
     userType: "adopter"
   });
+
+  // Initialize user type from query param if provided
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const role = (params.get('role') || '').toLowerCase();
+      if (role === 'founder' || role === 'adopter') {
+        setFormData(prev => ({ ...prev, userType: role }));
+      }
+    } catch {}
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
