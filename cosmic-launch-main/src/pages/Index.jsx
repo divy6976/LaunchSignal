@@ -16,9 +16,11 @@ const Index = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await startupAPI.getFounderAnalytics();
-        if (Array.isArray(res?.trending)) setTrending(res.trending);
-      } catch (_) {}
+        const res = await startupAPI.getTrending('week');
+        if (Array.isArray(res)) setTrending(res);
+      } catch (_) {
+        // ignore; section components render without this
+      }
     };
     load();
   }, []);
@@ -43,10 +45,10 @@ const Index = () => {
           />
         </div>
 
-        {/* Floating elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 opacity-60 floating-element" />
-        <div className="absolute top-40 right-20 w-16 h-16 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 opacity-50 floating-element-delayed" />
-        <div className="absolute bottom-40 left-20 w-12 h-12 rounded-full bg-gradient-to-br from-green-100 to-green-200 opacity-40 floating-element-slow" />
+        {/* Floating elements (polished orbit dots) */}
+        <div className="absolute top-20 left-10 orbit-dot orbit-dot--primary floating-element" />
+        <div className="absolute top-40 right-20 orbit-dot orbit-dot--ghost floating-element-delayed" />
+        <div className="absolute bottom-40 left-20 orbit-dot orbit-dot--ghost floating-element-slow opacity-80" />
       </div>
 
       <div className="relative z-10">

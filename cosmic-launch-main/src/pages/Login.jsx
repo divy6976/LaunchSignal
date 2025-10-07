@@ -354,93 +354,61 @@ const Login = () => {
                 </motion.div>
               )}
 
-              {/* Email Field with Floating Label */}
+              {/* Email Field with Standard Label */}
               <motion.div 
                 className="space-y-3"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
-                <div className="relative group">
-                  <motion.div
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 transition-all duration-300 group-focus-within:text-blue-500"
-                    animate={focusedField === "email" ? { scale: [1, 1.1, 1] } : {}}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Mail className="w-5 h-5" />
-                  </motion.div>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    onFocus={() => setFocusedField("email")}
-                    onBlur={() => setFocusedField("")}
-                    className="w-full h-12 pl-12 pr-4 pt-6 pb-2 border border-slate-300 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 bg-white/80 backdrop-blur-sm hover:border-slate-400 hover:bg-white peer placeholder-transparent text-slate-700 text-sm shadow-soft hover:shadow-soft-lg"
-                    placeholder="Email"
-                    required
-                  />
-                  <Label
-                    htmlFor="email"
-                    className={`absolute left-12 transition-all duration-300 pointer-events-none ${
-                      focusedField === "email" || formData.email
-                        ? "top-2 text-xs text-blue-600 font-semibold"
-                        : "top-1/2 -translate-y-1/2 text-slate-500 font-medium"
-                    }`}
-                  >
-                    Email address
-                  </Label>
+                <div>
+                  <Label htmlFor="email" className="block mb-2 text-slate-700 font-medium">Email address</Label>
+                  <div className="relative">
+                    <Mail className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-full h-12 pl-12 pr-4 border border-slate-300 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none focus-visible:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm hover:border-slate-400 hover:bg-white text-slate-700 text-sm shadow-soft hover:shadow-soft-lg"
+                      required
+                    />
+                  </div>
                 </div>
               </motion.div>
 
-              {/* Password Field with Floating Label */}
+              {/* Password Field with Standard Label */}
               <motion.div 
                 className="space-y-3"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
-                <div className="relative group">
-                  <motion.div
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 transition-all duration-300 group-focus-within:text-blue-500"
-                    animate={focusedField === "password" ? { scale: [1, 1.1, 1] } : {}}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Lock className="w-5 h-5" />
-                  </motion.div>
-                  <Input
-                    id="password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    onFocus={() => setFocusedField("password")}
-                    onBlur={() => setFocusedField("")}
-                    className="w-full h-12 pl-12 pr-12 pt-6 pb-2 border border-slate-300 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 bg-white/80 backdrop-blur-sm hover:border-slate-400 hover:bg-white peer placeholder-transparent text-slate-700 text-sm shadow-soft hover:shadow-soft-lg"
-                    placeholder="Password"
-                    required
-                  />
-                  <Label
-                    htmlFor="password"
-                    className={`absolute left-12 transition-all duration-300 pointer-events-none ${
-                      focusedField === "password" || formData.password
-                        ? "top-2 text-xs text-blue-600 font-semibold"
-                        : "top-1/2 -translate-y-1/2 text-slate-500 font-medium"
-                    }`}
-                  >
-                    Password
-                  </Label>
-                  <motion.button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-all duration-300"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                  </motion.button>
+                <div>
+                  <Label htmlFor="password" className="block mb-2 text-slate-700 font-medium">Password</Label>
+                  <div className="relative">
+                    <Lock className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    <Input
+                      id="password"
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      className="w-full h-12 pl-12 pr-12 border border-slate-300 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none focus-visible:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm hover:border-slate-400 hover:bg-white text-slate-700 text-sm shadow-soft hover:shadow-soft-lg"
+                      required
+                    />
+                    <motion.button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-all duration-300 focus:outline-none focus-visible:outline-none"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </motion.button>
+                  </div>
                 </div>
               </motion.div>
 

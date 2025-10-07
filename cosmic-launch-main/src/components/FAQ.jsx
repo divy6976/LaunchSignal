@@ -29,6 +29,10 @@ const FAQ = () => {
     },
   ], []);
 
+  // Manage open accordion item at the component top-level to respect hooks rules.
+  const [openIndex, setOpenIndex] = useState(null);
+  const toggle = (i) => setOpenIndex((prev) => (prev === i ? null : i));
+
   return (
     <section id="faq" className="relative py-24 md:py-32 overflow-hidden">
       {/* Premium background matching Hero.jsx */}
@@ -53,32 +57,26 @@ const FAQ = () => {
           </p>
         </div>
 
-        {(() => {
-          const [openIndex, setOpenIndex] = useState(null);
-          const toggle = (i) => setOpenIndex((prev) => (prev === i ? null : i));
-          return (
-            <div className="columns-1 md:columns-2 gap-6 [column-fill:_balance] [&>*]:mb-6">
-              {faqs.map((item, idx) => (
-                <div
-                  key={item.q}
-                  className={`hero-card p-6 transition-all duration-300 cursor-pointer break-inside-avoid ${openIndex === idx ? 'border-blue-200/80 shadow-premium' : 'hover:shadow-premium'}`}
-                  onClick={() => toggle(idx)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(idx); }}}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold text-slate-900 pr-6 text-lg">{item.q}</span>
-                    <ChevronDown className={`h-5 w-5 text-slate-500 transition-transform duration-300 ${openIndex === idx ? 'rotate-180 text-blue-600' : 'group-hover:text-blue-600'}`} />
-                  </div>
-                  {openIndex === idx && (
-                    <div className="mt-4 text-slate-600 text-base leading-relaxed">{item.a}</div>
-                  )}
-                </div>
-              ))}
+        <div className="columns-1 md:columns-2 gap-6 [column-fill:_balance] [&>*]:mb-6">
+          {faqs.map((item, idx) => (
+            <div
+              key={item.q}
+              className={`hero-card p-6 transition-all duration-300 cursor-pointer break-inside-avoid ${openIndex === idx ? 'border-blue-200/80 shadow-premium' : 'hover:shadow-premium'}`}
+              onClick={() => toggle(idx)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(idx); }}}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-slate-900 pr-6 text-lg">{item.q}</span>
+                <ChevronDown className={`h-5 w-5 text-slate-500 transition-transform duration-300 ${openIndex === idx ? 'rotate-180 text-blue-600' : 'group-hover:text-blue-600'}`} />
+              </div>
+              {openIndex === idx && (
+                <div className="mt-4 text-slate-600 text-base leading-relaxed">{item.a}</div>
+              )}
             </div>
-          );
-        })()}
+          ))}
+        </div>
 
         <div className="mt-16 text-center">
           <a 

@@ -271,43 +271,43 @@ const Signup = () => {
                 </div>
               </div>
 
-              {/* Name Fields with floating labels */}
+              {/* Name Fields with standard labels (no overlapping placeholders) */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="relative">
-                  <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
-                  <Input id="firstName" name="firstName" type="text" value={formData.firstName} onChange={handleInputChange} onFocus={() => {}} className="w-full h-11 pl-10 pr-4 pt-5 pb-2 border border-slate-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all bg-white hover:border-slate-400 peer placeholder-transparent text-slate-700 text-sm" placeholder="First name" required />
-                  <Label htmlFor="firstName" className={`absolute left-12 transition-all duration-300 pointer-events-none top-2 text-xs text-blue-600 font-medium`}>First name</Label>
+                  <Label htmlFor="firstName" className="block mb-2 text-slate-700 font-medium">First name</Label>
+                  <User className="pointer-events-none absolute left-4 top-[3.25rem] -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <Input id="firstName" name="firstName" type="text" value={formData.firstName} onChange={handleInputChange} className="w-full h-12 pl-14 pr-4 border border-slate-300 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none focus-visible:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm hover:border-slate-400 hover:bg-white text-slate-700 text-sm shadow-soft hover:shadow-soft-lg" required />
                 </div>
                 <div className="relative">
-                  <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
-                  <Input id="lastName" name="lastName" type="text" value={formData.lastName} onChange={handleInputChange} className="w-full h-11 pl-10 pr-4 pt-5 pb-2 border border-slate-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all bg-white hover:border-slate-400 peer placeholder-transparent text-slate-700 text-sm" placeholder="Last name" required />
-                  <Label htmlFor="lastName" className={`absolute left-12 transition-all duration-300 pointer-events-none top-2 text-xs text-blue-600 font-medium`}>Last name</Label>
+                  <Label htmlFor="lastName" className="block mb-2 text-slate-700 font-medium">Last name</Label>
+                  <User className="pointer-events-none absolute left-4 top-[3.25rem] -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <Input id="lastName" name="lastName" type="text" value={formData.lastName} onChange={handleInputChange} className="w-full h-12 pl-14 pr-4 border border-slate-300 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none focus-visible:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm hover:border-slate-400 hover:bg-white text-slate-700 text-sm shadow-soft hover:shadow-soft-lg" required />
                 </div>
               </div>
 
               {/* Email */}
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 transition-colors duration-300" />
-                <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} className="w-full h-11 pl-10 pr-4 pt-5 pb-2 border border-slate-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all bg-white hover:border-slate-400 peer placeholder-transparent text-slate-700 text-sm" placeholder="Email" required />
-                <Label htmlFor="email" className={`absolute left-12 transition-all duration-300 pointer-events-none top-2 text-xs text-blue-600 font-medium`}>Email address</Label>
+                <Label htmlFor="email" className="block mb-2 text-slate-700 font-medium">Email address</Label>
+                <Mail className="pointer-events-none absolute left-4 top-[3.25rem] -translate-y-1/2 w-5 h-5 text-slate-400 transition-colors duration-300" />
+                <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} className="w-full h-12 pl-14 pr-4 border border-slate-300 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none focus-visible:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm hover:border-slate-400 hover:bg-white text-slate-700 text-sm shadow-soft hover:shadow-soft-lg" required />
               </div>
 
               {/* Password */}
-                <div className="relative">
-                <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 transition-colors duration-300" />
-                <Input id="password" name="password" type={showPassword ? "text" : "password"} value={formData.password} onChange={handleInputChange} className="w-full h-11 pl-10 pr-12 pt-5 pb-2 border border-slate-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all bg-white hover:border-slate-400 peer placeholder-transparent text-slate-700 text-sm" placeholder="Password" required />
-                <Label htmlFor="password" className={`absolute left-12 transition-all duration-300 pointer-events-none top-2 text-xs text-blue-600 font-medium`}>Password</Label>
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors duration-300">
+              <div className="relative">
+                <Label htmlFor="password" className="block mb-2 text-slate-700 font-medium">Password</Label>
+                <Lock className="pointer-events-none absolute left-4 top-[3.25rem] -translate-y-1/2 w-5 h-5 text-slate-400 transition-colors duration-300" />
+                <Input id="password" name="password" type={showPassword ? "text" : "password"} value={formData.password} onChange={handleInputChange} className="w-full h-12 pl-14 pr-12 border border-slate-300 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none focus-visible:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm hover:border-slate-400 hover:bg-white text-slate-700 text-sm shadow-soft hover:shadow-soft-lg" required />
+                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-[3.25rem] -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors duration-300">
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                  </button>
-                </div>
+                </button>
+              </div>
 
               {/* Confirm Password */}
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 transition-colors duration-300" />
-                <Input id="confirmPassword" name="confirmPassword" type={showConfirmPassword ? "text" : "password"} value={formData.confirmPassword} onChange={handleInputChange} className="w-full h-11 pl-10 pr-12 pt-5 pb-2 border border-slate-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all bg-white hover:border-slate-400 peer placeholder-transparent text-slate-700 text-sm" placeholder="Confirm Password" required />
-                <Label htmlFor="confirmPassword" className={`absolute left-12 transition-all duration-300 pointer-events-none top-2 text-xs text-blue-600 font-medium`}>Confirm password</Label>
-                <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors duration-300">
+                <Label htmlFor="confirmPassword" className="block mb-2 text-slate-700 font-medium">Confirm password</Label>
+                <Lock className="pointer-events-none absolute left-4 top-[3.25rem] -translate-y-1/2 w-5 h-5 text-slate-400 transition-colors duration-300" />
+                <Input id="confirmPassword" name="confirmPassword" type={showConfirmPassword ? "text" : "password"} value={formData.confirmPassword} onChange={handleInputChange} className="w-full h-12 pl-14 pr-12 border border-slate-300 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none focus-visible:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm hover:border-slate-400 hover:bg-white text-slate-700 text-sm shadow-soft hover:shadow-soft-lg" required />
+                <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-[3.25rem] -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors duration-300">
                   {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>

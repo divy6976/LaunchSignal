@@ -155,10 +155,10 @@ const Footer = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-24 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg hover:shadow-xl hover:bg-blue-700 transition-all duration-300 hover:scale-110"
+          className="fixed bottom-8 right-[84px] z-50 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg ring-2 ring-white/80 hover:ring-white hover:shadow-xl hover:bg-blue-700 transition-all duration-300 hover:scale-110"
           aria-label="Scroll to top"
         >
-          <ArrowUp className="h-5 w-5" />
+          <ArrowUp className="h-[54px] w-[54px]" />
         </motion.button>
       )}
 
@@ -167,11 +167,11 @@ const Footer = () => {
         <PopoverTrigger asChild>
           <button
             type="button"
-            className="fixed bottom-8 right-8 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-white text-red-600 border border-slate-200 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-110"
+            className="fixed bottom-8 right-8 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-white text-red-600 border border-slate-200 shadow-md ring-2 ring-white/80 hover:ring-white hover:shadow-lg transition-all duration-300 hover:scale-110"
             aria-label="Support"
             title="Support"
           >
-            <Heart className="h-6 w-6" />
+          <Heart className="h-[54px] w-[54px]" />
           </button>
         </PopoverTrigger>
         <PopoverContent className="w-96 p-0 mr-6 mb-2 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50">

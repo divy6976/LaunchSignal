@@ -262,7 +262,7 @@ const StartupDiscovery = () => {
   };
 
   return (
-    <section id="startups" className="relative py-24 md:py-32 overflow-hidden">
+    <section id="startups" className="relative py-12 md:py-16 overflow-hidden">
       {/* Premium background */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-blue-50/30" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.08)_0%,transparent_50%)]" />
@@ -277,7 +277,7 @@ const StartupDiscovery = () => {
       >
         <motion.div
           variants={itemVariants}
-          className="text-center mb-16 md:mb-20"
+          className="text-center mb-10 md:mb-12"
         >
           <motion.div 
             className="inline-flex items-center gap-2 rounded-full border border-red-200/60 bg-red-50/80 backdrop-blur-sm px-6 py-3 text-sm font-semibold text-red-700 mb-8 shadow-soft"
@@ -312,7 +312,7 @@ const StartupDiscovery = () => {
 
         {/* Startup Grid (Top 3 ranked) */}
         <motion.div 
-          className="grid grid-cols-1 gap-8 md:gap-10 lg:grid-cols-3"
+          className="grid grid-cols-1 gap-5 md:gap-6 lg:grid-cols-3"
           variants={containerVariants}
         >
           {(() => {
@@ -345,7 +345,7 @@ const StartupDiscovery = () => {
               return (
                 <motion.div 
                   key={startup?.id || index} 
-                  className="relative pt-8"
+                  className="relative pt-4"
                   variants={itemVariants}
                   whileHover={{ y: -8 }}
                   transition={{ duration: 0.3 }}
@@ -360,7 +360,7 @@ const StartupDiscovery = () => {
                   </motion.div>
                   
                   <motion.div
-                    className={`group relative flex flex-col h-[700px] bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-soft hover:shadow-premium transition-all duration-500 overflow-hidden ${isCenter ? 'lg:scale-[1.08] lg:-translate-y-4 border-blue-300/80' : 'hover:border-blue-200/80'} ${rankNum===1?'ring-2 ring-yellow-400/50 shadow-glow': ''}`}
+                    className={`group relative flex flex-col bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-soft hover:shadow-premium transition-all duration-500 overflow-hidden ${isCenter ? 'lg:scale-[1.04] lg:-translate-y-1 border-blue-300/80' : 'hover:border-blue-200/80'} ${rankNum===1?'ring-2 ring-yellow-400/50 shadow-glow': ''}`}
                     whileHover={{ scale: isCenter ? 1.08 : 1.02 }}
                     transition={{ duration: 0.3 }}
                   >
@@ -371,8 +371,8 @@ const StartupDiscovery = () => {
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-50/50 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     
-                    <div className="relative z-10 p-8 md:p-10">
-                      <div className="flex items-start justify-between mb-8">
+                    <div className="relative z-10 p-6 md:p-8">
+                      <div className="flex items-start justify-between mb-6">
                         <div className="flex items-start space-x-4 flex-1">
                           <motion.div 
                             className="relative flex-shrink-0"
@@ -421,6 +421,8 @@ const StartupDiscovery = () => {
                                     ? 'fill-current' 
                                     : ''
                                 }`} 
+                                color={upvotedStartups.has(startup?._id || startup?.id) ? '#dc2626' : '#64748b'}
+                                fill={upvotedStartups.has(startup?._id || startup?.id) ? '#dc2626' : 'none'}
                               />
                             </motion.div>
                             <span className="text-sm font-semibold">
@@ -440,11 +442,11 @@ const StartupDiscovery = () => {
                         </div>
                       </div>
 
-                      <div className="mb-8 flex-1 md:min-h-[200px]">
-                        <h4 className="font-semibold text-slate-900 text-lg mb-3">
+                      <div className="mb-6 flex-1">
+                        <h4 className="font-semibold text-slate-900 text-base md:text-lg mb-2">
                           {(startup?.description || '').split('.')[0]}.
                         </h4>
-                        <p className="text-slate-600 text-sm leading-relaxed mb-6 line-clamp-4">
+                        <p className="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-4">
                           {(startup?.description || '').split('.').slice(1).join('.').trim()}
                         </p>
 
@@ -468,7 +470,7 @@ const StartupDiscovery = () => {
                       </div>
 
                       {/* Enhanced Special Offer */}
-                      <div className="mb-8 p-4 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 hover:border-green-300 transition-all duration-300 hover:shadow-soft">
+                      <div className="mb-4 p-3 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 hover:border-green-300 transition-all duration-300 hover:shadow-soft">
                         <div className="flex items-start space-x-4">
                           <motion.div 
                             className="flex h-8 w-8 items-center justify-center rounded-xl bg-green-500 shadow-soft flex-shrink-0 mt-1"
@@ -505,7 +507,7 @@ const StartupDiscovery = () => {
                         </div>
                       </div>
 
-                      <div className="mt-auto flex items-center justify-between pt-6 border-t border-slate-200">
+                      <div className="mt-auto flex items-center justify-between pt-3 border-t border-slate-200">
                         <div className="text-sm text-slate-500">
                           <span className="font-medium">{startup?.founderId?.fullName || 'Founder'}</span>
                           <span className="mx-2">•</span>
@@ -540,7 +542,7 @@ const StartupDiscovery = () => {
 
         <motion.div
           variants={itemVariants}
-          className="text-center mt-20 md:mt-24"
+          className="text-center mt-8 md:mt-10"
         >
           <Link to="/login">
             <motion.div
@@ -548,7 +550,7 @@ const StartupDiscovery = () => {
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              <Button className="group relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white px-10 md:px-12 py-6 md:py-7 text-lg md:text-xl font-semibold rounded-2xl shadow-premium hover:shadow-glow transition-all duration-300 w-full sm:w-auto">
+              <Button className="group relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white px-8 md:px-10 py-5 md:py-6 text-base md:text-lg font-semibold rounded-2xl shadow-premium hover:shadow-glow transition-all duration-300 w-full sm:w-auto">
                 <span className="relative z-10 flex items-center justify-center gap-3">
                   <motion.div
                     animate={{ rotate: [0, 12, 0] }}
