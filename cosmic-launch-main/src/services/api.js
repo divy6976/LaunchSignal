@@ -4,7 +4,7 @@ import axios from 'axios';
 // In production on Vercel, set VITE_API_URL to your Render backend origin.
 // Example: VITE_API_URL=https://your-backend.onrender.com
 // If not set, auto-fallback to Render when running on the Vercel domain.
-const inferredOrigin = (typeof window !== 'undefined' && window.location.host.includes('launch-signal.vercel.app'))
+const inferredOrigin = (typeof window !== 'undefined' && (window.location.host.includes('launch-signal.vercel.app') || window.location.host.includes('launch-signal.tech')))
   ? 'https://launchsignal.onrender.com'
   : '';
 const API_ORIGIN = (import.meta?.env?.VITE_API_URL || inferredOrigin || '').replace(/\/$/, '');
