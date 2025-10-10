@@ -367,7 +367,7 @@ const Login = () => {
               >
                 <div>
                   <Label htmlFor="email" className="block mb-2 text-slate-700 font-medium">Email address</Label>
-                  <div className="relative">
+                  <div className="relative h-12 group">
                     <Mail className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                     <Input
                       id="email"
@@ -391,27 +391,24 @@ const Login = () => {
               >
                 <div>
                   <Label htmlFor="password" className="block mb-2 text-slate-700 font-medium">Password</Label>
-                  <div className="relative">
-                    <Lock className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <div className="relative h-12">
+                    <Lock className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 transition-colors duration-300" />
                     <Input
                       id="password"
                       name="password"
                       type={showPassword ? "text" : "password"}
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="w-full h-12 pl-12 pr-12 border border-slate-300 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none focus-visible:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm hover:border-slate-400 hover:bg-white text-slate-700 text-sm shadow-soft hover:shadow-soft-lg"
+                      className="w-full h-12 pl-14 pr-12 border border-slate-300 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none focus-visible:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm hover:border-slate-400 hover:bg-white text-slate-700 text-sm shadow-soft hover:shadow-soft-lg"
                       required
                     />
-                    <motion.button
+                    <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-all duration-300 focus:outline-none focus-visible:outline-none"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      transition={{ duration: 0.2 }}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors duration-300"
                     >
                       {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                    </motion.button>
+                    </button>
                   </div>
                 </div>
               </motion.div>

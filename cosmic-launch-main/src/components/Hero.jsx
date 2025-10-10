@@ -39,7 +39,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative overflow-hidden py-24 md:py-32 lg:py-40">
+    <section className="relative overflow-hidden pt-28 pb-24 md:py-32 lg:py-40">
       {/* Premium animated background */}
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
         {/* Primary gradient */}
@@ -105,7 +105,7 @@ const Hero = () => {
         {/* Badge */}
         <motion.div
           variants={itemVariants}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-blue-200/60 bg-blue-50/80 backdrop-blur-sm px-6 py-3 text-sm font-semibold text-blue-700 shadow-soft"
+          className="mb-8 hidden sm:inline-flex items-center gap-2 rounded-full border border-blue-200/60 bg-blue-50/80 backdrop-blur-sm px-6 py-3 text-sm font-semibold text-blue-700 shadow-soft"
         >
           <motion.div
             animate={{ rotate: [0, 360] }}

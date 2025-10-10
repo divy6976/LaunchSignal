@@ -588,24 +588,53 @@ const getFilterOptions = async (req, res) => {
     }
 };
 
-// Increment view count for a startup
+// Increment view count for a startup and record granular analytics (day/hour)
 const incrementView = async (req, res) => {
     try {
         const { id } = req.params;
         
-        const startup = await Startup.findByIdAndUpdate(
-            id,
-            { $inc: { views: 1 } },
-            { new: true }
-        );
-        
+        // Load full doc to update analytics arrays reliably
+        const startup = await Startup.findById(id);
         if (!startup) {
             return res.status(404).json({ message: 'Startup not found' });
         }
-        
-        res.status(200).json({ 
+        // Increment total views counter
+        startup.views = (startup.views || 0) + 1;
+
+        // Update dailyViews and hourlyViews
+        const now = new Date();
+        const dayKey = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const hour = now.getHours();
+
+        // Ensure analytics object exists
+        if (!startup.analytics) startup.analytics = {};
+        if (!Array.isArray(startup.analytics.dailyViews)) startup.analytics.dailyViews = [];
+        if (!Array.isArray(startup.analytics.hourlyViews)) startup.analytics.hourlyViews = [];
+
+        // Update daily view entry
+        let dailyEntry = startup.analytics.dailyViews.find(v => {
+            try { return new Date(v.date).toDateString() === dayKey.toDateString(); } catch { return false; }
+        });
+        if (!dailyEntry) {
+            dailyEntry = { date: dayKey, count: 0 };
+            startup.analytics.dailyViews.push(dailyEntry);
+        }
+        dailyEntry.count = (dailyEntry.count || 0) + 1;
+
+        // Update hourly view entry (one per hour)
+        let hourlyEntry = startup.analytics.hourlyViews.find(v => v.hour === hour);
+        if (!hourlyEntry) {
+            hourlyEntry = { hour, count: 0 };
+            startup.analytics.hourlyViews.push(hourlyEntry);
+        }
+        hourlyEntry.count = (hourlyEntry.count || 0) + 1;
+
+        startup.analytics.lastUpdated = now;
+        await startup.save();
+
+        res.status(200).json({
             message: 'View incremented',
-            views: startup.views 
+            views: startup.views
         });
     } catch (error) {
         console.error('Error incrementing view:', error);
@@ -641,17 +670,17 @@ const getStartupAnalytics = async (req, res) => {
         const feedbacks = await Feedback.find({ startupId }).populate('userId', 'fullName').sort({ createdAt: -1 });
         const feedbackCount = feedbacks.length;
 
-        // Generate daily analytics data (last 30 days)
+        // Generate daily analytics data (last 30 days) using persisted dailyViews
         const dailyData = [];
         const now = new Date();
+        const dailyMap = new Map((startup.analytics?.dailyViews || []).map(v => [new Date(v.date).toDateString(), v.count || 0]));
         for (let i = 29; i >= 0; i--) {
             const date = new Date(now);
             date.setDate(date.getDate() - i);
             const dateStr = date.toISOString().split('T')[0];
-            
-            // Count views for this date (mock data for now)
-            const dailyViews = Math.floor(Math.random() * 50) + 10;
-            
+            const dayKey = date.toDateString();
+            const dailyViews = dailyMap.get(dayKey) || 0;
+
             // Count upvotes for this date
             const dayStart = new Date(date);
             dayStart.setHours(0, 0, 0, 0);
@@ -674,19 +703,20 @@ const getStartupAnalytics = async (req, res) => {
                 views: dailyViews,
                 upvotes: dailyUpvotes,
                 feedback: dailyFeedback,
-                shares: Math.floor(Math.random() * 5) + 1, // Mock data
+                shares: 0,
             });
         }
 
-        // Generate hourly data for today
+        // Generate hourly data for today using persisted hourlyViews
         const hourlyData = [];
+        const hourlyMap = new Map((startup.analytics?.hourlyViews || []).map(v => [v.hour, v.count || 0]));
         for (let hour = 0; hour < 24; hour++) {
             const hourStart = new Date();
             hourStart.setHours(hour, 0, 0, 0);
             const hourEnd = new Date();
             hourEnd.setHours(hour, 59, 59, 999);
 
-            const hourlyViews = Math.floor(Math.random() * 20) + 1; // Mock data
+            const hourlyViews = hourlyMap.get(hour) || 0;
             const hourlyUpvotes = await Upvote.countDocuments({
                 startupId,
                 createdAt: { $gte: hourStart, $lte: hourEnd }
@@ -717,14 +747,15 @@ const getStartupAnalytics = async (req, res) => {
         ];
 
         // Calculate overview metrics
-        const totalViews = dailyData.reduce((sum, day) => sum + day.views, 0);
+        // Use persisted total views for accuracy
+        const totalViews = startup.views || dailyData.reduce((sum, day) => sum + day.views, 0);
         const totalUpvotes = upvoteCount;
         const totalFeedback = feedbackCount;
         const totalShares = dailyData.reduce((sum, day) => sum + day.shares, 0);
         const engagementRate = totalViews > 0 ? Math.round((totalUpvotes / totalViews) * 100) : 0;
         const feedbackRate = totalViews > 0 ? Math.round((totalFeedback / totalViews) * 100) : 0;
         const avgViewsPerDay = Math.round(totalViews / 30);
-        const growthRate = Math.floor(Math.random() * 50) - 10; // Mock growth rate
+        const growthRate = 0;
 
         // Top performers
         const topPerformers = [

@@ -35,12 +35,18 @@ const StartupsFeed = () => {
   const [myUpvotedList, setMyUpvotedList] = useState([]);
   const [showUpvotedOnly, setShowUpvotedOnly] = useState(false);
   const [visibleCount, setVisibleCount] = useState(6);
+  const [userRole, setUserRole] = useState(null);
+  const isFounder = String(userRole).toLowerCase() === 'founder';
 
   // Get user name from localStorage or URL params
   useEffect(() => {
     // Check if user is logged in
     const loggedInStatus = localStorage.getItem('isLoggedIn');
     setIsLoggedIn(!!loggedInStatus);
+    try {
+      const role = localStorage.getItem('userRole');
+      if (role) setUserRole(role);
+    } catch {}
     
     if (!loggedInStatus) {
       // Redirect to login if not authenticated
@@ -96,12 +102,14 @@ const StartupsFeed = () => {
     const fetchStartups = async () => {
       try {
         setIsLoadingStartups(true);
-        const [feed, myUpvotes] = await Promise.all([
-          startupAPI.getFeedForAdopter(),
-          startupAPI.getMyUpvotes().catch(() => ({ startups: [] }))
-        ]);
+        // Founders can see the public/adopter feed but shouldn't hit adopter-only upvote endpoints
+        const feedPromise = startupAPI.getFeedForAdopter();
+        const upvotesPromise = (!isFounder)
+          ? startupAPI.getMyUpvotes().catch(() => ({ startups: [] }))
+          : Promise.resolve({ startups: [] });
+        const [feed, myUpvotes] = await Promise.all([feedPromise, upvotesPromise]);
         setStartups(feed || []);
-        if (myUpvotes && Array.isArray(myUpvotes.startups)) {
+        if (!isFounder && myUpvotes && Array.isArray(myUpvotes.startups)) {
           setUpvotedStartups(new Set(myUpvotes.startups.map(s => s._id || s.id)));
           setMyUpvotedList(myUpvotes.startups);
         }
@@ -116,7 +124,7 @@ const StartupsFeed = () => {
     if (isLoggedIn) {
       fetchStartups();
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, isFounder]);
 
   // Fetch filter options for dropdowns
   useEffect(() => {
@@ -137,6 +145,8 @@ const StartupsFeed = () => {
   // Removed automatic view tracking - now only tracks on View Details clicks
 
   const toggleUpvote = (startupId) => {
+    // Founders cannot upvote; ignore clicks
+    if (isFounder) return;
     setUpvotedStartups(prev => {
       const newSet = new Set(prev);
       const isCurrentlyUpvoted = newSet.has(startupId);
@@ -352,6 +362,7 @@ const StartupsFeed = () => {
               <p className="text-sm text-gray-600">Showing startups you upvoted. Use the toggle to go back.</p>
             )}
           </div>
+          {!isFounder && (
           <div className="inline-flex items-center rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
             <button
               type="button"
@@ -369,6 +380,7 @@ const StartupsFeed = () => {
               Your Upvoted <span className="ml-1 inline-flex items-center justify-center text-[11px] font-bold bg-blue-100 text-blue-700 rounded-full px-2 py-[1px]">{upvotedStartups.size}</span>
             </button>
           </div>
+          )}
         </div>
 
         {/* Search and Filters */}
@@ -529,6 +541,7 @@ const StartupsFeed = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+                  {!isFounder && (
                   <button
                     onClick={() => toggleUpvote(startup._id || startup.id)}
                     className={`flex items-center gap-1 px-3 py-1.5 rounded-lg transition-all duration-300 hover:scale-105 ${
@@ -548,6 +561,7 @@ const StartupsFeed = () => {
                       {getUpvoteCount(startup)}
                     </span>
                   </button>
+                  )}
                   <Badge 
                     variant={startup.businessType === 'B2B' ? 'default' : 'secondary'} 
                     className={`text-xs font-semibold px-2 py-1 rounded-full ${

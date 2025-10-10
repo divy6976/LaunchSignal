@@ -183,7 +183,7 @@ const ValuePropositions = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="group text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-slate-200/60 shadow-soft hover:shadow-premium transition-all duration-300 hover:-translate-y-2"
+              className="group text-center p-6 rounded-2xl bg-white border border-slate-200/60 shadow-soft hover:shadow-premium transition-all duration-300 hover:-translate-y-2"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
             >
@@ -194,7 +194,7 @@ const ValuePropositions = () => {
               >
                 <stat.icon className={`h-6 w-6 text-${stat.color}-600`} />
               </motion.div>
-              <div className="text-3xl font-bold text-slate-900 mb-2">{stat.value}</div>
+              <div className="text-3xl font-bold text-slate-900 mb-2 break-words">{stat.value}</div>
               <div className="text-sm text-slate-600 font-medium">{stat.label}</div>
             </motion.div>
           ))}

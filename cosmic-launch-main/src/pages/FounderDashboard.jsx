@@ -317,12 +317,19 @@ const FounderDashboard = () => {
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-semibold text-gray-700">My Startups</h2>
             {myStartups.length > 0 && (
-              <Link to="/submit-startup">
-                <Button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
-                  <Sparkles className="h-4 w-4" />
-                  <span>+ Submit New Startup</span>
-                </Button>
-              </Link>
+              <div className="flex items-center gap-3">
+                <Link to="/startups-feed">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                    Explore Feed
+                  </Button>
+                </Link>
+                <Link to="/submit-startup">
+                  <Button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
+                    <Sparkles className="h-4 w-4" />
+                    <span>+ Submit New Startup</span>
+                  </Button>
+                </Link>
+              </div>
             )}
           </div>
           
@@ -350,11 +357,16 @@ const FounderDashboard = () => {
                     Share your startup with early adopters and get valuable feedback.
                   </p>
                   
-                  {/* Submit Button */}
+                  {/* Actions */}
                   <Link to="/submit-startup">
                     <Button className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg flex items-center space-x-2">
                       <span className="text-lg font-bold">+</span>
                       <span>Submit Startup</span>
+                    </Button>
+                  </Link>
+                  <Link to="/startups-feed">
+                    <Button variant="outline" className="mt-3 border-blue-300 text-blue-700 hover:bg-blue-50 px-6 py-3 rounded-lg">
+                      Explore Feed
                     </Button>
                   </Link>
                 </div>

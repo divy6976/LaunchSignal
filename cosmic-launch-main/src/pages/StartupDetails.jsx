@@ -33,6 +33,14 @@ const StartupDetails = () => {
         setLoading(true);
         const data = await startupAPI.getStartupById(id);
         setStartup(data);
+        // Increment a view once per session to avoid overcounting
+        try {
+          const k = `viewed_${id}`;
+          if (!sessionStorage.getItem(k)) {
+            await startupAPI.incrementView(id);
+            sessionStorage.setItem(k, '1');
+          }
+        } catch (_) {}
       } catch (e) {
         setError("Failed to load startup");
       } finally {
@@ -46,6 +54,24 @@ const StartupDetails = () => {
     
     fetchDetails();
   }, [id]);
+
+  // Keyboard navigation for media left/right
+  useEffect(() => {
+    const handleKey = (e) => {
+      const tag = (e.target?.tagName || '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || e.altKey || e.ctrlKey || e.metaKey) return;
+      if (!Array.isArray(startup?.media) || startup.media.length < 2) return;
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setMediaIndex((prev) => (prev - 1 + startup.media.length) % startup.media.length);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setMediaIndex((prev) => (prev + 1) % startup.media.length);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [startup]);
 
   const handleSubmitFeedback = async () => {
     if (!feedbackText.trim() || feedbackText.length < 10) {
@@ -150,11 +176,16 @@ const StartupDetails = () => {
                   )}
                 </div>
                 {/* Primary large viewer fills the box */}
-                <div className="relative w-full overflow-hidden rounded-xl border border-gray-200 bg-white">
+                <div
+                  className="group relative w-full overflow-hidden rounded-xl border border-gray-200 bg-white"
+                  role="region"
+                  aria-label="Startup media viewer"
+                  tabIndex={0}
+                >
                   {isVideo(startup.media[mediaIndex]) ? (
-                    <video src={startup.media[mediaIndex]} controls className="w-full h-[28rem] md:h-[34rem] object-contain bg-white" />
+                    <video src={startup.media[mediaIndex]} controls className="w-full h-[28rem] md:h-[34rem] object-contain bg-white pointer-events-none" />
                   ) : (
-                    <img src={startup.media[mediaIndex]} alt={`media-${mediaIndex + 1}`} className="w-full h-[28rem] md:h-[34rem] object-contain bg-white" />
+                    <img src={startup.media[mediaIndex]} alt={`media-${mediaIndex + 1}`} className="w-full h-[28rem] md:h-[34rem] object-contain bg-white pointer-events-none" />
                   )}
                   {startup.media.length > 1 && (
                     <>
@@ -162,17 +193,17 @@ const StartupDetails = () => {
                         type="button"
                         aria-label="Previous media"
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); setMediaIndex((prev) => (prev - 1 + startup.media.length) % startup.media.length); }}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center h-10 w-10 rounded-full bg-white/90 border border-gray-200 shadow hover:bg-white"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 z-50 inline-flex items-center justify-center h-10 w-10 rounded-full bg-gray-900/80 text-white backdrop-blur-sm shadow-xl ring-2 ring-white/70 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"
                       >
-                        <ChevronLeft className="h-5 w-5 text-gray-700" />
+                        <span className="text-white text-2xl leading-none select-none" aria-hidden="true">‹</span>
                       </button>
                       <button
                         type="button"
                         aria-label="Next media"
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); setMediaIndex((prev) => (prev + 1) % startup.media.length); }}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center h-10 w-10 rounded-full bg-white/90 border border-gray-200 shadow hover:bg-white"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 z-50 inline-flex items-center justify-center h-10 w-10 rounded-full bg-gray-900/80 text-white backdrop-blur-sm shadow-xl ring-2 ring-white/70 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"
                       >
-                        <ChevronRight className="h-5 w-5 text-gray-700" />
+                        <span className="text-white text-2xl leading-none select-none" aria-hidden="true">›</span>
                       </button>
                       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 bg-white/80 px-2 py-1 rounded-full border border-gray-200">
                         {startup.media.map((_, i) => (

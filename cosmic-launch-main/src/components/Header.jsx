@@ -66,7 +66,7 @@ const Header = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`sticky top-0 z-50 w-full transition-all duration-500 ${
+      className={`sticky top-0 z-[60] w-full transition-all duration-500 ${
         scrolled
           ? "backdrop-blur-xl bg-white/90 border-b border-slate-200/60 shadow-soft-lg"
           : "backdrop-blur-sm bg-white/70 border-b border-slate-100/50"
@@ -111,6 +111,23 @@ const Header = () => {
                     transition={{ duration: 0.3 }}
                   />
               </motion.button>
+            )}
+            {isLoggedIn && (userRole === 'founder' || isAdmin) && !isAnalyticsPage && (
+              <Link to="/startups-feed">
+                <motion.button 
+                    className="group relative px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-blue-600 rounded-xl transition-all duration-300 hover:bg-blue-50/80"
+                    whileHover={{ y: -1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <span className="relative z-10">Explore Feed</span>
+                    <motion.div
+                      className="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full"
+                      initial={{ width: 0 }}
+                      whileHover={{ width: "60%" }}
+                      transition={{ duration: 0.3 }}
+                    />
+                </motion.button>
+              </Link>
             )}
 
             {!isAnalyticsPage && (
@@ -177,6 +194,15 @@ const Header = () => {
             </>
           ) : (
             <>
+              {(userRole === 'founder' || isAdmin) && (
+                <Link to="/startups-feed">
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                    <Button className="text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-5 py-2.5 shadow-soft hover:shadow-glow transition-all duration-300">
+                      Explore Feed
+                    </Button>
+                  </motion.div>
+                </Link>
+              )}
               {(userRole === 'founder' || isAdmin) && (
                 <Link to="/founder-dashboard">
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -252,7 +278,7 @@ const Header = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-[60] bg-black/40 lg:hidden"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <motion.div
@@ -260,7 +286,7 @@ const Header = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="absolute right-0 top-0 h-full w-80 bg-white/95 backdrop-blur-xl shadow-2xl border-l border-slate-200/60"
+              className="absolute right-0 top-0 h-full w-80 bg-white shadow-2xl border-l border-slate-200/60 z-[61]"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex flex-col h-full">
@@ -316,15 +342,27 @@ const Header = () => {
                         </motion.button>
                       </Link>
                     )}
+                    {isLoggedIn && (userRole === 'founder' || isAdmin) && (
+                      <Link to="/startups-feed" onClick={() => setIsMobileMenuOpen(false)}>
+                        <motion.button 
+                          className="w-full text-left text-slate-700 hover:text-blue-600 hover:bg-blue-50/80 text-base font-semibold py-4 px-4 transition-all rounded-xl"
+                          whileHover={{ x: 4 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          Explore Feed
+                        </motion.button>
+                      </Link>
+                    )}
                   </div>
                 </nav>
 
                 <div className="p-6 border-t border-slate-100/60 space-y-3">
+                  <div className="text-xs font-semibold tracking-wide text-slate-500 uppercase">Account</div>
                   <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="block">
                     <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                       <Button
-                        variant="ghost"
-                        className="w-full text-base font-semibold text-slate-700 border border-slate-200 hover:bg-blue-50/80 hover:border-blue-300 hover:text-blue-600 rounded-xl py-4 shadow-soft"
+                        variant="outline"
+                        className="w-full text-base font-semibold bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 hover:border-blue-300 hover:text-blue-700 rounded-xl py-4 shadow-soft"
                       >
                         Log In
                       </Button>

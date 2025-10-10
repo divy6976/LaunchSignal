@@ -42,12 +42,17 @@ const StartupAnalytics = ({ startupId, startupName }) => {
   const [timeRange, setTimeRange] = useState('7d');
   const [feedbackItems, setFeedbackItems] = useState([]);
   const [loadingFeedback, setLoadingFeedback] = useState(true);
+  const [error, setError] = useState(null);
+  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     if (startupId) {
       fetchAnalytics();
     }
   }, [startupId, timeRange]);
+
+  // Note: Auto-polling disabled per requirement. Analytics are fetched on page load
+  // and when the time range is changed by the user.
 
   // Load feedback for this startup
   useEffect(() => {
@@ -81,28 +86,22 @@ const StartupAnalytics = ({ startupId, startupName }) => {
 
   const fetchAnalytics = async () => {
     try {
+      if (isFetching) return;
+      setIsFetching(true);
+      setError(null);
       setLoading(true);
-      // Try to fetch real analytics data from API
-      try {
-        const realAnalytics = await startupAPI.getStartupAnalytics(startupId);
-        setAnalytics(realAnalytics);
-      } catch (apiError) {
-        console.warn('API analytics not available, using mock data:', apiError);
-        // Fallback to mock data if API fails
-        const mockAnalytics = generateMockAnalytics(startupId, timeRange);
-        setAnalytics(mockAnalytics);
-      }
+      const realAnalytics = await startupAPI.getStartupAnalytics(startupId);
+      setAnalytics(realAnalytics);
     } catch (error) {
       console.error('Error fetching analytics:', error);
-      // Fallback to mock data on any error
-      const mockAnalytics = generateMockAnalytics(startupId, timeRange);
-      setAnalytics(mockAnalytics);
+      setError('Failed to load analytics');
     } finally {
+      setIsFetching(false);
       setLoading(false);
     }
   };
 
-  // Mock data generator - this will be replaced with real API call
+  // Mock generator retained for potential local demos, but not used automatically
   const generateMockAnalytics = (id, range) => {
     const days = range === '7d' ? 7 : range === '30d' ? 30 : 90;
     const now = new Date();
