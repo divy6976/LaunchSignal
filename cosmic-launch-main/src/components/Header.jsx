@@ -96,73 +96,80 @@ const Header = () => {
 
         <nav className="hidden lg:flex items-center">
           <div className="flex items-center gap-1 rounded-2xl border border-slate-200/60 bg-white/80 backdrop-blur-sm px-3 py-2 shadow-soft">
-            {!isAnalyticsPage && (
-              <motion.button 
-                  className="group relative px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-blue-600 rounded-xl transition-all duration-300 hover:bg-blue-50/80"
-                  whileHover={{ y: -1 }}
-                  transition={{ duration: 0.2 }}
-                  onClick={() => goToSection('trending')}
-                >
-                  <span className="relative z-10">Explore Startups</span>
-                  <motion.div
-                    className="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full"
-                    initial={{ width: 0 }}
-                    whileHover={{ width: "60%" }}
-                    transition={{ duration: 0.3 }}
-                  />
-              </motion.button>
-            )}
-            {isLoggedIn && (userRole === 'founder' || isAdmin) && !isAnalyticsPage && (
-              <Link to="/startups-feed">
-                <motion.button 
-                    className="group relative px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-blue-600 rounded-xl transition-all duration-300 hover:bg-blue-50/80"
-                    whileHover={{ y: -1 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <span className="relative z-10">Explore Feed</span>
-                    <motion.div
-                      className="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: "60%" }}
-                      transition={{ duration: 0.3 }}
-                    />
-                </motion.button>
-              </Link>
-            )}
-
-            {!isAnalyticsPage && (
-              <motion.button 
-                  className="group relative px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-blue-600 rounded-xl transition-all duration-300 hover:bg-blue-50/80"
-                  whileHover={{ y: -1 }}
-                  transition={{ duration: 0.2 }}
-                  onClick={() => goToSection('faq')}
-                >
-                  <span className="relative z-10">FAQ</span>
-                  <motion.div
-                    className="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full"
-                    initial={{ width: 0 }}
-                    whileHover={{ width: "60%" }}
-                    transition={{ duration: 0.3 }}
-                  />
-              </motion.button>
-            )}
-
-            {!(userRole === 'founder' && pathname.startsWith('/submit-startup')) && !isAnalyticsPage && (
-              <Link to="/contact">
-                <motion.button 
-                  className="group relative px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-blue-600 rounded-xl transition-all duration-300 hover:bg-blue-50/80"
-                  whileHover={{ y: -1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <span className="relative z-10">Contact</span>
-                  <motion.div
-                    className="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full"
-                    initial={{ width: 0 }}
-                    whileHover={{ width: "60%" }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.button>
-              </Link>
+            {/* Simplified navigation for founders */}
+            {isLoggedIn && (userRole === 'founder' || isAdmin) ? (
+              <>
+                <Link to="/founder-dashboard">
+                  <motion.button 
+                      className="group relative px-5 py-2.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-xl transition-all duration-300"
+                      whileHover={{ y: -1 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <span className="relative z-10">Dashboard</span>
+                  </motion.button>
+                </Link>
+                <Link to="/submit-startup">
+                  <motion.button 
+                      className="group relative px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-blue-600 rounded-xl transition-all duration-300 hover:bg-blue-50/80"
+                      whileHover={{ y: -1 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <span className="relative z-10">Submit Startup</span>
+                  </motion.button>
+                </Link>
+              </>
+            ) : (
+              /* Simplified navigation for adopters and visitors */
+              <>
+                {isLoggedIn && (userRole === 'adopter' || isAdmin) ? (
+                  /* Adopter navigation - ultra clean with only My Feed */
+                  <Link to="/startups-feed">
+                    <motion.button 
+                        className="group relative px-5 py-2.5 text-sm font-semibold text-blue-600 bg-blue-50 rounded-xl transition-all duration-300"
+                        whileHover={{ y: -1 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <span className="relative z-10">My Feed</span>
+                    </motion.button>
+                  </Link>
+                ) : (
+                  /* Visitor navigation - minimal options */
+                  <>
+                    {!isAnalyticsPage && (
+                      <motion.button 
+                          className="group relative px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-blue-600 rounded-xl transition-all duration-300 hover:bg-blue-50/80"
+                          whileHover={{ y: -1 }}
+                          transition={{ duration: 0.2 }}
+                          onClick={() => goToSection('trending')}
+                        >
+                          <span className="relative z-10">Explore Startups</span>
+                          <motion.div
+                            className="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full"
+                            initial={{ width: 0 }}
+                            whileHover={{ width: "60%" }}
+                            transition={{ duration: 0.3 }}
+                          />
+                      </motion.button>
+                    )}
+                    {!isAnalyticsPage && (
+                      <motion.button 
+                          className="group relative px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-blue-600 rounded-xl transition-all duration-300 hover:bg-blue-50/80"
+                          whileHover={{ y: -1 }}
+                          transition={{ duration: 0.2 }}
+                          onClick={() => goToSection('faq')}
+                        >
+                          <span className="relative z-10">FAQ</span>
+                          <motion.div
+                            className="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full"
+                            initial={{ width: 0 }}
+                            whileHover={{ width: "60%" }}
+                            transition={{ duration: 0.3 }}
+                          />
+                      </motion.button>
+                    )}
+                  </>
+                )}
+              </>
             )}
           </div>
         </nav>
@@ -311,47 +318,68 @@ const Header = () => {
 
                 <nav className="flex-1 overflow-y-auto p-6">
                   <div className="flex flex-col space-y-2">
-                    {!(userRole === 'founder' && pathname.startsWith('/submit-startup')) && !isContactPage && (
-                      <motion.button
-                        className="text-left text-slate-700 hover:text-blue-600 hover:bg-blue-50/80 text-base font-semibold py-4 px-4 transition-all rounded-xl"
-                        onClick={() => { goToSection('trending'); setIsMobileMenuOpen(false); }}
-                        whileHover={{ x: 4 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        Explore Startups
-                      </motion.button>
-                    )}
-                    {!isContactPage && (
-                      <motion.button
-                        className="text-left text-slate-700 hover:text-blue-600 hover:bg-blue-50/80 text-base font-semibold py-4 px-4 transition-all rounded-xl"
-                        onClick={() => { goToSection('faq'); setIsMobileMenuOpen(false); }}
-                        whileHover={{ x: 4 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        FAQ
-                      </motion.button>
-                    )}
-                    {!(userRole === 'founder' && pathname.startsWith('/submit-startup')) && (
-                      <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                        <motion.button 
-                          className="w-full text-left text-slate-700 hover:text-blue-600 hover:bg-blue-50/80 text-base font-semibold py-4 px-4 transition-all rounded-xl"
-                          whileHover={{ x: 4 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          Contact
-                        </motion.button>
-                      </Link>
-                    )}
-                    {isLoggedIn && (userRole === 'founder' || isAdmin) && (
-                      <Link to="/startups-feed" onClick={() => setIsMobileMenuOpen(false)}>
-                        <motion.button 
-                          className="w-full text-left text-slate-700 hover:text-blue-600 hover:bg-blue-50/80 text-base font-semibold py-4 px-4 transition-all rounded-xl"
-                          whileHover={{ x: 4 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          Explore Feed
-                        </motion.button>
-                      </Link>
+                    {/* Simplified mobile navigation for founders */}
+                    {isLoggedIn && (userRole === 'founder' || isAdmin) ? (
+                      <>
+                        <Link to="/founder-dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                          <motion.button
+                            className="w-full text-left text-blue-600 bg-blue-50 text-base font-semibold py-4 px-4 transition-all rounded-xl"
+                            whileHover={{ x: 4 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            Dashboard
+                          </motion.button>
+                        </Link>
+                        <Link to="/submit-startup" onClick={() => setIsMobileMenuOpen(false)}>
+                          <motion.button
+                            className="w-full text-left text-slate-700 hover:text-blue-600 hover:bg-blue-50/80 text-base font-semibold py-4 px-4 transition-all rounded-xl"
+                            whileHover={{ x: 4 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            Submit Startup
+                          </motion.button>
+                        </Link>
+                      </>
+                    ) : (
+                      /* Mobile navigation for non-founders */
+                      <>
+                        {isLoggedIn && (userRole === 'adopter' || isAdmin) ? (
+                          /* Adopter mobile navigation - ultra clean with only My Feed */
+                          <Link to="/startups-feed" onClick={() => setIsMobileMenuOpen(false)}>
+                            <motion.button 
+                              className="w-full text-left text-blue-600 bg-blue-50 text-base font-semibold py-4 px-4 transition-all rounded-xl"
+                              whileHover={{ x: 4 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              My Feed
+                            </motion.button>
+                          </Link>
+                        ) : (
+                          /* Visitor mobile navigation */
+                          <>
+                            {!(userRole === 'founder' && pathname.startsWith('/submit-startup')) && !isContactPage && (
+                              <motion.button
+                                className="text-left text-slate-700 hover:text-blue-600 hover:bg-blue-50/80 text-base font-semibold py-4 px-4 transition-all rounded-xl"
+                                onClick={() => { goToSection('trending'); setIsMobileMenuOpen(false); }}
+                                whileHover={{ x: 4 }}
+                                transition={{ duration: 0.2 }}
+                              >
+                                Explore Startups
+                              </motion.button>
+                            )}
+                            {!isContactPage && (
+                              <motion.button
+                                className="text-left text-slate-700 hover:text-blue-600 hover:bg-blue-50/80 text-base font-semibold py-4 px-4 transition-all rounded-xl"
+                                onClick={() => { goToSection('faq'); setIsMobileMenuOpen(false); }}
+                                whileHover={{ x: 4 }}
+                                transition={{ duration: 0.2 }}
+                              >
+                                FAQ
+                              </motion.button>
+                            )}
+                          </>
+                        )}
+                      </>
                     )}
                   </div>
                 </nav>

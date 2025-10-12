@@ -7,7 +7,7 @@ import axios from 'axios';
 const inferredOrigin = (typeof window !== 'undefined' && (window.location.host.includes('launch-signal.vercel.app') || window.location.host.includes('launch-signal.tech')))
   ? 'https://launchsignal.onrender.com'
   : '';
-const API_ORIGIN = (import.meta?.env?.VITE_API_URL || inferredOrigin || '').replace(/\/$/, '');
+const API_ORIGIN = (import.meta?.env?.VITE_API_URL || inferredOrigin || 'http://localhost:3000').replace(/\/$/, '');
 const API_BASE_URL = API_ORIGIN ? `${API_ORIGIN}/api` : '/api';
 if (typeof window !== 'undefined') {
   // Log once to help verify the resolved API base in production builds

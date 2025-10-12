@@ -18,7 +18,7 @@ const port = Number(process.env.PORT) || 3000
 app.use((req, res, next) => {
     const origin = req.headers.origin || '';
     const vercelUrl = process.env.FRONTEND_ORIGIN || '';
-    const allowed = ['http://localhost:8080', 'http://127.0.0.1:8080'];
+    const allowed = ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:8080', 'http://127.0.0.1:8080'];
     if (vercelUrl) allowed.push(vercelUrl);
     if (allowed.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
