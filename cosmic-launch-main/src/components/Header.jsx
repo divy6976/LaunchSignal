@@ -88,7 +88,7 @@ const Header = () => {
             </div>
             <div className="flex flex-col">
               <span className="text-2xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent">
-                Launchsignal
+                LaunchSignal
               </span>
             </div>
           </motion.div>
@@ -303,7 +303,7 @@ const Header = () => {
                         <Rocket className="h-5 w-5 text-white" />
                       </div>
                       <span className="text-xl font-bold bg-gradient-to-r from-slate-900 to-blue-900 bg-clip-text text-transparent">
-                        Launchsignal
+                        LaunchSignal
                       </span>
                     </div>
                   <motion.button

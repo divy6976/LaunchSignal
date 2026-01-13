@@ -228,7 +228,7 @@ const FounderDashboard = () => {
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 shadow-sm">
                 <Rocket className="h-5 w-5 text-white" />
               </div>
-              <span className="text-lg font-bold text-gray-900">Launchsignal</span>
+              <span className="text-lg font-bold text-gray-900">LaunchSignal</span>
             </div>
 
             {/* Middle nav */}

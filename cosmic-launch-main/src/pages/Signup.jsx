@@ -193,7 +193,7 @@ const Signup = () => {
               <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/15 backdrop-blur-sm shadow-2xl border border-white/20">
                 <Rocket className="h-8 w-8 text-white" />
               </div>
-              <span className="text-4xl font-semibold text-white">Launchsignal</span>
+              <span className="text-4xl font-semibold text-white">LaunchSignal</span>
             </div>
             <div className="inline-flex items-center px-6 py-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
               <Zap className="h-4 w-4 mr-3 text-blue-300" />
@@ -225,7 +225,7 @@ const Signup = () => {
               </div>
               <div className="flex-1">
                 <h3 className="font-semibold text-xl mb-3 text-white">Find your community</h3>
-                <p className="text-slate-300 leading-relaxed font-normal">Connect with builders and early adopters in the Launchsignal network</p>
+                <p className="text-slate-300 leading-relaxed font-normal">Connect with builders and early adopters in the LaunchSignal network</p>
               </div>
             </div>
           </div>
@@ -246,7 +246,7 @@ const Signup = () => {
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 shadow-xl">
                   <Rocket className="h-6 w-6 text-white" />
                 </div>
-                <span className="text-2xl font-semibold text-slate-800">Launchsignal</span>
+                <span className="text-2xl font-semibold text-slate-800">LaunchSignal</span>
               </div>
             </div>
 
@@ -257,7 +257,7 @@ const Signup = () => {
                 <Rocket className="w-6 h-6 text-white" />
               </div>
               <h2 className="text-2xl font-semibold text-slate-800 mb-2">Create your account</h2>
-              <p className="text-slate-600 font-normal text-sm">Join Launchsignal to discover or launch startups</p>
+              <p className="text-slate-600 font-normal text-sm">Join LaunchSignal to discover or launch startups</p>
             </div>
 
 
