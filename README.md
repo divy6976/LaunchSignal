@@ -1,4 +1,4 @@
-# Launch Match
+# StartupHunt
 
 An end-to-end platform to discover, submit, and manage startup profiles. It includes a Node/Express backend with authentication and a modern React (Vite + Tailwind) frontend.
 
@@ -42,7 +42,7 @@ An end-to-end platform to discover, submit, and manage startup profiles. It incl
    ```
 2. Create an environment file `.env` (you can copy from `.envsample`) with values like:
    ```bash
-   MONGODB_URI=mongodb://localhost:27017/launch_match
+   MONGODB_URI=mongodb://localhost:27017/launchsignal
    JWT_SECRET=supersecret
    PORT=5000
    ```
@@ -96,7 +96,7 @@ Adjust base URLs in `frontend` at `src/services/api.js` to point to your backend
 
 ### 1. Can you explain Project?
 
-**Launch Match** is an end-to-end platform designed to connect startups with early adopters. The project serves as a discovery and submission platform where:
+**StartupHunt** is an end-to-end platform designed to connect startups with early adopters. The project serves as a discovery and submission platform where:
 
 - **Founders** can submit their startup profiles, manage their listings, track analytics (views, upvotes, feedback), and engage with potential adopters
 - **Adopters** can discover new startups, browse through various categories and industries, upvote their favorite startups, and provide feedback
