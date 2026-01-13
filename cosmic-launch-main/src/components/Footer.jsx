@@ -41,7 +41,7 @@ const Footer = () => {
                   <Rocket className="h-7 w-7 text-white" />
                 </div>
                 <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent">
-                  LaunchSignal
+                  Launchsignal
                 </span>
               </div>
             </Link>
@@ -143,7 +143,7 @@ const Footer = () => {
         <div className="border-t border-slate-300 pt-8">
           <div className="flex items-center justify-center">
             <p className="text-base text-slate-600 text-center font-medium">
-              © 2025 LaunchSignal. All rights reserved.
+              © 2025 Launchsignal. All rights reserved.
             </p>
           </div>
         </div>

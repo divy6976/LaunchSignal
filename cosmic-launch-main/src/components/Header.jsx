@@ -88,7 +88,7 @@ const Header = () => {
             </div>
             <div className="flex flex-col">
               <span className="text-2xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent">
-                LaunchSignal
+                Launchsignal
               </span>
             </div>
           </motion.div>
@@ -298,14 +298,14 @@ const Header = () => {
             >
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-6 border-b border-slate-100/60">
-                  <div className="flex items-center space-x-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 shadow-lg">
-                      <Rocket className="h-5 w-5 text-white" />
+                    <div className="flex items-center space-x-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 shadow-lg">
+                        <Rocket className="h-5 w-5 text-white" />
+                      </div>
+                      <span className="text-xl font-bold bg-gradient-to-r from-slate-900 to-blue-900 bg-clip-text text-transparent">
+                        Launchsignal
+                      </span>
                     </div>
-                    <span className="text-xl font-bold bg-gradient-to-r from-slate-900 to-blue-900 bg-clip-text text-transparent">
-                      LaunchSignal
-                    </span>
-                  </div>
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}

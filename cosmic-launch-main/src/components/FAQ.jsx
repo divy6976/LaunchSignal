@@ -4,8 +4,8 @@ import { ChevronDown } from "lucide-react";
 const FAQ = () => {
   const faqs = useMemo(() => [
     {
-      q: "What is LaunchSignal?",
-      a: "LaunchSignal is a SaaS platform where founders showcase startups and early adopters discover, upvote, and give actionable feedback.",
+      q: "What is Launchsignal?",
+      a: "Launchsignal is a SaaS platform where founders showcase startups and early adopters discover, upvote, and give actionable feedback.",
     },
     {
       q: "How do I submit my startup?",

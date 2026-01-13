@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: launchsignal-backend
+    name: startuphunt-backend
     rootDir: backend
     env: node
     plan: free

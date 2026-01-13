@@ -44,7 +44,7 @@ const sendContactEmail = async (req, res) => {
             </div>
           </div>
           <p style="color: #64748b; font-size: 14px;">
-            This message was sent from the LaunchMatch contact form.
+            This message was sent from the Launchsignal contact form.
           </p>
         </div>
       `
