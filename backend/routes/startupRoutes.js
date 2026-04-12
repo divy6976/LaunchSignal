@@ -1,6 +1,7 @@
 const express = require('express');
 const { createStartup, getFeedForAdopter, getStartupsForFounder, getFeedbackForStartup, getStartupById, updateStartup, upvoteStartup, removeUpvote, getMyUpvotes, setStartupStatus, listAllStartupsAdmin, getFounderAnalytics, getTrendingPublic, getFilterOptions, incrementView, getStartupAnalytics, getAdminCounts } = require('../controller/startupController');
 const { isLoggedIn, isFounder, isAdopter, attachUserIfPresent } = require('../middleware/auth');
+const { uploadStartupAssets, attachCloudinaryUrls } = require('../middleware/multer');
 const router = express.Router();
 
 // Simple admin check middleware (email allowlist) — replace with proper role later
@@ -33,10 +34,9 @@ router.post('/test', (req, res) => {
 
 // Founder apne startups dekh sakta hai (fetch from DB)
 router.get('/my-startups', isLoggedIn, isFounder, getStartupsForFounder);
-// Sirf logged-in founder hi startup create kar sakta hai
-router.post('/', isLoggedIn, isFounder, createStartup);
-// Sirf logged-in founder hi startup update kar sakta hai
-router.put('/:startupId', isLoggedIn, isFounder, updateStartup);
+// Founder: multipart optional logo + media → Cloudinary URLs on req.body
+router.post('/', isLoggedIn, isFounder, uploadStartupAssets, attachCloudinaryUrls, createStartup);
+router.put('/:startupId', isLoggedIn, isFounder, uploadStartupAssets, attachCloudinaryUrls, updateStartup);
 // Adopter/public feed: attach user if present so controller can personalize
 router.get('/', attachUserIfPresent, getFeedForAdopter);
 
