@@ -24,6 +24,14 @@ const api = axios.create({
   },
 });
 
+// Multipart (FormData): let the browser set Content-Type + boundary (not application/json)
+api.interceptors.request.use((config) => {
+  if (config.data instanceof FormData) {
+    delete config.headers['Content-Type'];
+  }
+  return config;
+});
+
 // Request interceptor to add auth token if available
 api.interceptors.request.use(
   (config) => {
@@ -124,11 +132,6 @@ export const startupAPI = {
     const response = await api.put(`/startups/${startupId}`, startupData);
     return response.data;
   },
-  // Get startups for current founder (analytics base)
-  getStartupsForFounder: async () => {
-    const response = await api.get('/startups/my-startups');
-    return response.data;
-  },
 
   // Upvotes persistence for adopter
   upvote: async (id) => {
@@ -153,6 +156,12 @@ export const startupAPI = {
   // Public trending startups (by upvotes); window: 'week' | 'all'
   getTrending: async (window = 'week') => {
     const response = await api.get(`/startups/trending?window=${encodeURIComponent(window)}`);
+    return response.data;
+  },
+
+  // Public marketing list (approved only, no auth); optional limit 1–50
+  getPublicStartups: async (limit = 24) => {
+    const response = await api.get(`/startups/public?limit=${encodeURIComponent(limit)}`);
     return response.data;
   },
 

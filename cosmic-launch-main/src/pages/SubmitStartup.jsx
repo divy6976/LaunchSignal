@@ -169,46 +169,26 @@ const SubmitStartup = () => {
         setError(`Uploads too large (${mb} MB). Please keep total under ${(MAX_TOTAL_BYTES / (1024 * 1024))} MB or upload fewer/smaller files.`);
         return;
       }
-      // Convert files to base64 (quick MVP)
-      const fileToBase64 = (file) => new Promise((resolve, reject) => {
-        if (!file) return resolve(null);
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
+
+      // Multipart: files go as logo + media; backend (Multer → Cloudinary) stores URLs
+      const payload = new FormData();
+      payload.append('name', formData.name);
+      payload.append('tagline', formData.tagline);
+      payload.append('description', formData.description);
+      payload.append('industry', formData.industry);
+      payload.append('categories', JSON.stringify(formData.categories));
+      payload.append('businessType', formData.businessType);
+      payload.append('targetAudience', formData.targetAudience);
+      payload.append('website', formData.website || '');
+      payload.append('contactEmail', formData.contactEmail || '');
+      if (formData.specialOffer) payload.append('specialOffer', formData.specialOffer);
+      if (formData.couponCode) payload.append('couponCode', formData.couponCode);
+      if (formData.logoFile) payload.append('logo', formData.logoFile);
+      (formData.mediaFiles || []).slice(0, 5).forEach((file) => {
+        payload.append('media', file);
       });
-      const filesToBase64 = async (files) => {
-        const arr = [];
-        for (const f of files || []) {
-          const b64 = await fileToBase64(f);
-          if (b64) arr.push(b64);
-          if (arr.length >= 5) break;
-        }
-        return arr;
-      };
 
-      const logoBase64 = await fileToBase64(formData.logoFile);
-      const mediaBase64 = await filesToBase64(formData.mediaFiles);
-
-      // Prepare payload for API
-      const payload = {
-        name: formData.name,
-        tagline: formData.tagline,
-        description: formData.description,
-        industry: formData.industry,
-        categories: formData.categories,
-        businessType: formData.businessType,
-        targetAudience: formData.targetAudience,
-        website: formData.website,
-        contactEmail: formData.contactEmail,
-        feedbackLink: formData.feedbackLink,
-        specialOffer: formData.specialOffer,
-        couponCode: formData.couponCode,
-        logo: logoBase64,
-        media: mediaBase64
-      };
-
-      console.log(isEditMode ? "Updating startup:" : "Submitting startup:", payload);
+      console.log(isEditMode ? 'Updating startup (multipart)' : 'Submitting startup (multipart)');
       
       let response;
       if (isEditMode) {
